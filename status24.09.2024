@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Metody tablicowe</title>
+</head>
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+    color: white;
+}
+
+h1{
+  text-align: center;
+  margin: 2vh;
+  font-size: 3vw;
+    color: red;
+}
+
+body{
+    background-color: black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+section{
+    display: flex;
+    padding: 1vw;
+}
+
+main{
+    width: 65%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px silver solid;
+    padding: 1vw;
+    gap: 5px;
+}
+
+fieldset{
+  display: flex;
+  flex-direction: column;
+  padding: 1vw;
+  width: 30vw;
+}
+
+input{
+  color: black;
+}
+
+aside{
+    padding: 1vw;
+    width: 35%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px silver solid;
+    gap: 5px;
+}
+
+
+article{
+    display: flex;
+    gap: 5px;
+    padding: 10px;
+    width: 90%;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    border: 2px silver solid;
+}
+</style>
+<body>
+    <h1>Blog</h1>
+    <form action="">
+      <label for="form">Nowy wpis:</label>
+      <fieldset id="form">
+        <label for="title">tytuł artykułu: </label>
+        <input type="text" name="title" id="title">
+        <label for="desc">opis artykułu: </label>
+        <textarea name="desc" id="desc" cols="30" rows="10"></textarea>
+        <label for="author">autor artykułu: </label>
+        <input type="text" name="author" id="author">
+        <label for="check">czy jest zajawką? </label>
+        <input type="checkbox" name="check" id="check">
+        <input type="reset" value="wyczyść">
+        <input onclick="addArticle()" type="reset" value="wyślij">
+      </fieldset>
+    </form>
+<section>
+    <main></main>
+    <aside></aside>
+</section>
+    <script>
+        body = document.querySelector("body")
+        nag = document.querySelector("h1")
+        main = document.querySelector("main")
+        aside = document.querySelector("aside")
+
+        const articles = [
+
+  {
+    id: 'art1',
+    title: 'article',
+    content:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque corrupti animi dicta porro doloribus incidunt minus molestias quaerat quis harum!',
+    author: 'Me',
+  },
+  {
+    id: 'art2',
+    title: 'article',
+    content:
+      'Natus praesentium distinctio, reiciendis doloribus dolorem, nobis deserunt unde aperiam voluptas eligendi qui veniam iusto nihil fugit! Nesciunt, ducimus temporibus?',
+    author: 'Me',
+  },
+  {
+    id: 'art3',
+    title: 'article',
+    content:
+      'Reiciendis earum accusamus atque ducimus maiores nihil culpa impedit voluptate incidunt repellendus libero, vel, quidem at? Numquam veniam quae nesciunt.',
+    author: 'Me',
+  },
+  {
+    id: 'art4',
+    title: 'article',
+    content:
+      'Minus obcaecati veniam sed voluptate ab provident, illo necessitatibus voluptatem unde quaerat. Adipisci, quae voluptatibus. At nulla repellendus animi cum?',
+    author: 'Me',
+  },
+  {
+    id: 'art5',
+    title: 'trailer',
+    content:
+      'Officia eius, magnam saepe at architecto accusantium illo distinctio pariatur cum impedit. Labore accusamus iure ratione, laboriosam dolorem minus odit',
+    author: 'Me',
+  },
+  {
+    id: 'art6',
+    title: 'trailer',
+    content:
+      'Dolores ad cumque ea doloribus ab magni. Quasi sint magnam necessitatibus, quod accusamus rerum. Accusamus inventore est delectus sapiente debitis.',
+    author: 'Me',
+  },
+  {
+    id: 'art7',
+    title: 'trailer',
+    content:
+      'Dolores ad cumque ea doloribus ab magni. Quasi sint magnam necessitatibus, quod accusamus rerum. Accusamus inventore est delectus sapiente debitis.',
+    author: 'Me',
+  },
+];
+
+        const article = articles.filter(elem=> elem.title == "article").map((elem, ind)=>{
+            elemnt = document.createElement("article")
+            h2 = document.createElement("h2")
+            h2.innerHTML = elem.title + " " + (ind+1)
+            elemnt.appendChild(h2)
+            p1 = document.createElement("p")
+            p1.innerHTML = elem.content
+            elemnt.appendChild(p1)
+            p2 = document.createElement("p")
+            p2.innerHTML = `Autor: <b>${elem.author}</b>`
+            elemnt.appendChild(p2)
+
+            main.appendChild(elemnt)
+        })
+        const trailer = articles.filter(elem=> elem.title == "trailer").map((elem, ind)=>{
+            elemnt = document.createElement("article")
+            h2 = document.createElement("h2")
+            h2.innerHTML = elem.title + " " + (ind+1)
+            elemnt.appendChild(h2)
+            p1 = document.createElement("p")
+            p1.innerHTML = elem.content
+            elemnt.appendChild(p1)
+            p2 = document.createElement("p")
+            p2.innerHTML = `Autor: <b>${elem.author}</b>`
+            elemnt.appendChild(p2)
+            aside.appendChild(elemnt)
+        })
+        
+        function addArticle(){
+          NewArticle = [
+            id = ("art" + articles.length + 1),
+            title = document.getElementById("title").value,
+            content = document.querySelector("textarea").value,
+            author = document.getElementById("author").value
+          ]
+          articles.push(NewArticle)
+          console.log("lipa")
+          // zjebane
+          let newArt = articles.filter(elem=> elem.id = NewArticle.id).map((elem, ind)=>{
+            elemnt = document.createElement("article")
+            h2 = document.createElement("h2")
+            h2.innerHTML = elem.title + " " + (ind+1)
+            elemnt.appendChild(h2)
+            p1 = document.createElement("p")
+            p1.innerHTML = elem.content
+            elemnt.appendChild(p1)
+            p2 = document.createElement("p")
+            p2.innerHTML = `Autor: <b>${elem.author}</b>`
+            elemnt.appendChild(p2)
+            document.getElementById("check").value ? aside.appendChild(elemnt) : main.appendChild(elemnt)
+        })
+        }
+   </script>
+</body>
+</html>
