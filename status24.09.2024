@@ -191,7 +191,7 @@ article{
             content = document.querySelector("textarea").value,
             author = document.getElementById("author").value
           ]
-          articles.push(NewArticle)
+          articles.unshift(NewArticle)
           console.log("lipa")
           // zjebane
           let newArt = articles.filter(elem=> elem.id = NewArticle.id).map((elem, ind)=>{
