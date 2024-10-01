@@ -1,0 +1,10 @@
+Przechodzenie po Gicie
+
+Zadania:
+https://learngitbranching.js.org/?locale=pl
+
+Wizualizacja:
+http://git-school.github.io/visualizing-git/
+
+Kolaboracje:
+Settings > Collaborations > Add
