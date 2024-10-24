@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pseudo Blog</title>
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          margin: 0;
+          padding: 0;
+          background-color: #f4f4f4;
+      }
+      h1 {
+          text-align: center;
+          color: #333;
+      }
+      .content {
+          display: flex;
+          justify-content: space-around;
+          margin: 20px;
+      }
+      main {
+          width: 60%;
+          padding: 20px;
+          background: #fff;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      aside {
+          width: 35%;
+          padding: 20px;
+          background: #fff;
+          border-radius: 5px;
+          box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      }
+      fieldset {
+          border: none;
+          margin-bottom: 20px;
+          padding: 10px;
+          background-color: #f9f9f9;
+          border-radius: 5px;
+          box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+      }
+      legend {
+          font-weight: bold;
+          font-size: 1.2em;
+          color: #007bff;
+      }
+      label {
+          display: block;
+          margin: 10px 0;
+          font-weight: bold;
+      }
+      input[type="text"],
+      textarea {
+          width: 100%;
+          padding: 10px;
+          margin-top: 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+      }
+      input[type="checkbox"] {
+          margin-top: 10px;
+      }
+      button {
+          margin-top: 10px;
+          padding: 10px 15px;
+          background-color: #007bff;
+          color: white;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+          transition: background-color 0.3s ease;
+      }
+      button:hover {
+          background-color: #0056b3;
+      }
+      article {
+          margin-bottom: 20px;
+          padding: 15px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          background-color: #fff;
+      }
+      .edit-button {
+          background-color: #28a745;
+      }
+      .edit-button:hover {
+          background-color: #218838;
+      }
+      .delete-button {
+          background-color: #dc3545;
+      }
+      .delete-button:hover {
+          background-color: #c82333;
+      }
+  </style>
+</head>
+<body>
+    <h1>Pseudo Blog</h1>
+    <form action="">
+        <fieldset>
+            <legend>Nowy wpis</legend>
+            <label>tytuł artykułu: <input type="text" name="name" id="name"></label>
+            <label>treść artykułu:<br><textarea name="tresc" cols="30" rows="10" id="tresc"></textarea></label>
+            <label>autor artykułu: <input type="text" name="autor" id="autor"></label>
+            <label>czy jest zajawka: <input type="checkbox" name="zajawka" id="zajawka"></label>
+            <input type="submit" value="Wyślij" id="btn">
+            <input type="reset" value="Wyczyść">
+        </fieldset>
+    </form>
+
+    <div class="content">
+        <main></main>
+        <aside></aside>
+    </div>
+
+    <script>
+        let articles = [
+            { id: 'art1', title: 'article', content: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Neque corrupti animi dicta porro doloribus incidunt minus molestias quaerat quis harum!', author: 'Me', zajawka: 'nie' },
+            { id: 'art2', title: 'article', content: 'Natus praesentium distinctio, reiciendis doloribus dolorem, nobis deserunt unde aperiam voluptas eligendi qui veniam iusto nihil fugit! Nesciunt, ducimus temporibus?', author: 'Me', zajawka: 'nie' },
+            { id: 'art3', title: 'article', content: 'Reiciendis earum accusamus atque ducimus maiores nihil culpa impedit voluptate incidunt repellendus libero, vel, quidem at? Numquam veniam quae nesciunt.', author: 'Me', zajawka: 'nie' },
+            { id: 'art4', title: 'article', content: 'Minus obcaecati veniam sed voluptate ab provident, illo necessitatibus voluptatem unde quaerat. Adipisci, quae voluptatibus. At nulla repellendus animi cum?', author: 'Me', zajawka: 'nie' },
+            { id: 'art5', title: 'trailer', content: 'Officia eius, magnam saepe at architecto accusantium illo distinctio pariatur cum impedit. Labore accusamus iure ratione, laboriosam dolorem minus odit', author: 'Me', zajawka: 'tak' },
+            { id: 'art6', title: 'trailer', content: 'Dolores ad cumque ea doloribus ab magni. Quasi sint magnam necessitatibus, quod accusamus rerum. Accusamus inventore est delectus sapiente debitis.', author: 'Me', zajawka: 'tak' },
+            { id: 'art7', title: 'trailer', content: 'Dolores ad cumque ea doloribus ab magni. Quasi sint magnam necessitatibus, quod accusamus rerum. Accusamus inventore est delectus sapiente debitis.', author: 'Me', zajawka: 'tak' },
+        ];
+
+        const main = document.querySelector("main");
+        const aside = document.querySelector("aside");
+        let currentEditId = null;
+
+        function wypisz() {
+            main.innerHTML = "";
+            aside.innerHTML = "";
+            const article = articles.filter(elem => elem.zajawka == "nie").map((elem) => {
+                const elemnt = document.createElement("article");
+                const h2 = document.createElement("h2");
+                h2.innerHTML = elem.title;
+                elemnt.appendChild(h2);
+                const i = document.createElement("i");
+                i.innerHTML = elem.id;
+                elemnt.appendChild(i);
+                const p1 = document.createElement("p");
+                p1.innerHTML = elem.content;
+                elemnt.appendChild(p1);
+                const p2 = document.createElement("p");
+                p2.innerHTML = `Autor: <b>${elem.author}</b>`;
+                elemnt.appendChild(p2);
+
+                const btnUsun = document.createElement("button");
+                btnUsun.textContent = 'Usuń';
+                btnUsun.classList.add('delete-button');
+                btnUsun.addEventListener('click', () => {
+                    const idToRemove = elem.id;
+                    articles = articles.filter(article => article.id !== idToRemove);
+                    wypisz();
+                });
+                elemnt.appendChild(btnUsun);
+
+                const btnEdit = document.createElement("button");
+                btnEdit.textContent = 'Edytuj';
+                btnEdit.classList.add('edit-button');
+                btnEdit.addEventListener('click', () => {
+                    const editArticle = articles.find(a => a.id === elem.id);
+
+                    document.getElementById('name').value = editArticle.title;
+                    document.getElementById('tresc').value = editArticle.content;
+                    document.getElementById('autor').value = editArticle.author;
+                    document.getElementById('zajawka').checked = editArticle.zajawka === 'tak';
+                    document.getElementById('btn').setAttribute('data-id', elem.id);
+                    currentEditId = elem.id;
+                });
+                elemnt.appendChild(btnEdit);
+                main.appendChild(elemnt);
+            });
+
+            const trailer = articles.filter(elem => elem.zajawka == "tak").map((elem) => {
+                const elemnt = document.createElement("article");
+                const h2 = document.createElement("h2");
+                h2.innerHTML = elem.title;
+                elemnt.appendChild(h2);
+                const i = document.createElement("i");
+                i.innerHTML = elem.id;
+                elemnt.appendChild(i);
+                const p1 = document.createElement("p");
+                p1.innerHTML = elem.content;
+                elemnt.appendChild(p1);
+                const p2 = document.createElement("p");
+                p2.innerHTML = `Autor: <b>${elem.author}</b>`;
+                elemnt.appendChild(p2);
+
+                const btnUsun = document.createElement("button");
+                btnUsun.textContent = 'Usuń';
+                btnUsun.classList.add('delete-button');
+                btnUsun.addEventListener('click', () => {
+                    const idToRemove = elem.id;
+                    articles = articles.filter(article => article.id !== idToRemove);
+                    wypisz();
+                });
+                elemnt.appendChild(btnUsun);
+                const btnEdit = document.createElement("button");
+                btnEdit.textContent = 'Edytuj';
+                btnEdit.classList.add('edit-button');
+                btnEdit.addEventListener('click', () => {
+                    const editArticle = articles.find(a => a.id === elem.id);
+
+                    document.getElementById('name').value = editArticle.title;
+                    document.getElementById('tresc').value = editArticle.content;
+                    document.getElementById('autor').value = editArticle.author;
+                    document.getElementById('zajawka').checked = editArticle.zajawka === 'tak';
+                    document.getElementById('btn').setAttribute('data-id', elem.id);
+                    currentEditId = elem.id;
+                });
+                elemnt.appendChild(btnEdit);
+                aside.appendChild(elemnt);
+            });
+        }
+
+        wypisz();
+        const btn = document.querySelector("#btn");
+        btn.addEventListener("click", function (evt) {
+            evt.preventDefault();
+            let namen = document.querySelector("input[name='name']").value;
+            let trescn = document.querySelector("textarea[name='tresc']").value;
+            let autorn = document.querySelector("input[name='autor']").value;
+            let chckbox = document.querySelector("input[name='zajawka']");
+            const zaja = chckbox.checked ? "tak" : "nie";
+
+            
+            if (currentEditId) {
+                const articleToUpdate = articles.find(article => article.id === currentEditId);
+                if (articleToUpdate) {
+                    articleToUpdate.title = namen;
+                    articleToUpdate.content = trescn;
+                    articleToUpdate.author = autorn;
+                    articleToUpdate.zajawka = zaja;
+                }
+                currentEditId = null; 
+            } else {
+                const idn = self.crypto.randomUUID();
+                const newArticle = { id: idn, title: namen, content: trescn, author: autorn, zajawka: zaja };
+                articles.unshift(newArticle);
+            }
+            wypisz();
+            
+            document.querySelector("form").reset();
+        });
+    </script>
+</body>
+</html>
