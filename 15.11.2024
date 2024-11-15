@@ -1,0 +1,40 @@
+const express = require('express');
+const { resolve } = require('path');
+
+const app = express();
+const port = 3010;
+
+app.use(express.static('static'));
+
+app.get('/', (req, res) => {
+  res.sendFile(resolve(__dirname, 'pages/index.html'));
+});
+
+//loading index.html
+app.get('/index.html', (req, res) => {
+  res.sendFile(__dirname + '/pages/index.html');
+});
+//loading main.html
+app.get('/main.html', (req, res) => {
+  res.sendFile(__dirname + '/pages/main.html');
+});
+//loading sub html
+app.get('/sub.html', (req, res) => {
+  res.sendFile(__dirname + '/pages/sub.html');
+});
+//loading css styles
+app.get('/style.css', (req, res) => {
+  res.sendFile(__dirname + '/static/style.css');
+});
+//loading main script
+app.get('/main.js', (req, res) => {
+  res.sendFile(__dirname + '/static/main.js');
+});
+//loading image
+app.get('/img.jpg', (req, res) => {
+  res.sendFile(__dirname + '/static/img/img.jpg');
+});
+
+app.listen(port, () => {
+  console.log(`Example app listening at http://localhost:${port}`);
+});
