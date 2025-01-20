@@ -1,2 +1,4 @@
-20.01.2025
+React Java Script:
 https://stackblitz.com/edit/mfp-rege?file=src%2Fassets%2FLists%2FUserList.jsx
+-podstawy
+-listy
